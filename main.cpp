@@ -9,6 +9,15 @@ Libro arrL[10];
 Usuario arrU[10];
 bool isAdmin = false;
 
+void imprimir(int ind){
+	cout << "A continuacion se listan los libros existentes" << endl;
+	for (int i = 0; i < ind; i++){
+		if (arrL[i].getTitulo() != ""){
+			cout << (i+1) << " -> " << arrL[i].getTitulo() << " Precio -> " << arrL[i].getPrecio() << endl;
+		}
+	}
+}
+
 int menu(){
 	int op;
 	cout << "\nEscoja la opcion que desee:"
@@ -82,15 +91,60 @@ Usuario menuLogin(bool &flag){
 	}
 }
 
-void Agregar(){
+void Agregar(int &ind){
+	cin.ignore();
 	Libro l;
-	cout << "Ingrese el nombre del libro: "<<endl;
-	string t; cin >> t;
+	cout << "Ingrese el titulo del libro: " << endl;
+	string t; getline(cin, t);
 	l.setTitulo(t);
+	cout << "Ingrese el nombre del autor" << endl;
+	string a; getline(cin, a);
+	cin.ignore();
+	l.setAutor(a);
+	cin.get();
+	while(true){
+		cout << "Ingrese el precio del libro"<< endl;
+		float p; cin >> p;
+		if (p > 0) { l.setPrecio(p);break; 
+		}else{ cout << "El precio no puede ser negativo" << endl;}
+	}
+	l.setEstado(true);
+	arrL[ind] = l;
+	ind++;
+}
+
+void Eliminar(int ind){
+	int op;
+	while(true){
+		cout << "Ingrese el indice del libro que desee eliminar: "<< endl;
+		cin >> op;
+		if (op > 0 && op < ind){
+			arrL[op].setTitulo("");
+		}else{
+			cout << "No existe ese libro!!!!" << endl;
+		}
+	}
+}
+
+int fillSpace(int ind){
+	for(int i=0; i < ind; i++){
+		if (arrL[i].getTitulo() == ""){
+			return i;
+		}
+	}
+	return ind;
+}
+
+void blank(int ind){
+	for(int i = 0; i < ind; i++){
+		arrL[i].setTitulo("");
+	}
 }
 
 void selector(){
 	bool salida = false, successLog = false;
+	int tamLibro = 0;
+	int tamUsr = 2, index = tamLibro;
 	Usuario actual;
 		while(!salida){
 			actual = menuLogin(successLog);
@@ -99,7 +153,42 @@ void selector(){
 				switch(menuAdmin()){
 					case 1: 
 						cout << "Agregar Libro" << endl;
-						
+						if (tamLibro < 10){
+							index = fillSpace();
+							if(index == tamLibro){
+								Agregar(tamLibro);
+							}else{
+								Agregar(index);
+								imprimir(tamLibro);
+							}
+						}else{
+							cout << "Ya no puede crear mas libros" << endl;
+						}
+						break;
+					case 2:
+						if (tamLibro == 0){
+							cout << "No puede Modificar libros si no hay ninguno!!" << endl;
+						}else{
+							imprimir(tamLibro);
+						}
+						break;
+					case 3:
+						if (tamLibro == 0){
+							cout << "No se puede eliminar un elemento si no ha libros para eliminar" << endl;
+						}else{
+							imprimir(tamLibro);
+							Eliminar(tamLibro);
+							cout << "Ingrese el archivo que quiera eliminar:" << endl;
+							
+						}
+						break;
+					case 4:
+						if (tamLibro == 0){
+							cout << "El arreglo esta vacio!!!" << endl;
+						}else{
+							tamLibro = 0;
+							blank(tamLibro);
+						}
 						break;
 					default:
 							cout << "La opcion de admnistrador es incorrecta!!!" << endl;
@@ -107,7 +196,7 @@ void selector(){
 			}else{
 				switch(menu()){
 					default:
-						cout << "La opcion es incorrecta";
+						cout << "La opcion es incorrecta" << endl;
 				}
 			}
 		}
