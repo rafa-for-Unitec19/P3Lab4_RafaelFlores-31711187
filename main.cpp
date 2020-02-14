@@ -106,7 +106,7 @@ void Agregar(int &ind){
 	string t; getline(cin, t);
 	l.setTitulo(t);
 	cout << "Ingrese el nombre del autor" << endl;
-	string a; cin >> a;
+	string a; getline(cin, a);
 	l.setAutor(a);
 	cin.get();
 	while(true){
