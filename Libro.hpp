@@ -9,8 +9,8 @@ class Libro{
 		float precio;
 		bool estado;
 	public: 
-		Libro();
-		~Libro();
+		Libro(){};
+		~Libro(){};
 		void setTitulo(string t) {this->titulo = t;};
 		void setAutor(string a){this->autor = a;};
 		void setPrecio(float p){this->precio = p;};

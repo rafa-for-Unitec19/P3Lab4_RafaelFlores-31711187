@@ -7,8 +7,9 @@ class Usuario{
 		int edad;
 		float dinero;
 	public:
-		Usuario();
-		~Usuario();
+		Usuario(){};
+		Usuario(string, string, string, int, float);
+		~Usuario(){};
 		void setUsr(string u){this->usr = u;};
 		void setPass(string p){this->pass = p;};
 		void setNombre(string n){this->nombre = n;};
