@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include "Libro.hpp"
 #include "Usuario.hpp"
@@ -56,6 +57,8 @@ Usuario Login(){
 			if(i == 0){
 				cout << "Es admin " <<endl;
 				isAdmin = true;
+			}else{
+				isAdmin = false;
 			}
 			return arrU[i];
 		}
@@ -190,7 +193,7 @@ void selector(){
 							cout << "No se puede eliminar un elemento si no ha libros para eliminar" << endl;
 						}else{
 							imprimir(tamLibro);
-							Eliminar(tamLibro);
+							Eliminar(tamLibro-1);
 							cout << "Ingrese el archivo que quiera eliminar:" << endl;
 							
 						}
@@ -270,6 +273,7 @@ void selector(){
 					case 7: 
 						cout << "Saliendo de la cuenta..." << endl;
 						successLog = false;
+						break;
 					default:
 						cout << "La opcion es incorrecta" << endl;
 				}
